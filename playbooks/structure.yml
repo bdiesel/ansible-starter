@@ -1,0 +1,21 @@
+--- #This is a structural example to install HTTPD on Centos
+- hosts: centos-remote
+  remote_user: ansible
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  vars:
+    username: myuser
+  tasks:
+  - name: Install HHTPD server on CentOS 7 Nodes
+    yum:
+      name: httpd
+      state: latest
+    notify:
+    - startservice
+  handlers:
+  - name: startservice      
+    service:
+      name: httpd
+      state: restarted
